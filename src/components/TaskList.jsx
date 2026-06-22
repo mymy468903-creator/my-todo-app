@@ -8,7 +8,7 @@ export function TaskList({ dreams, todos, onToggle, onDelete }) {
   if (!hasDreams && !hasTodos) {
     return (
       <section className="todo-list-card">
-        <p className="empty-state">やりたいこともTODOも追加されていません。思いついたことを追加しましょう！</p>
+        <p className="empty-state">WISHもTODOも追加されていません。思いついたことを追加しましょう！</p>
       </section>
     )
   }
