@@ -1,22 +1,38 @@
 // ローカルストレージキー
-export const STORAGE_KEY = 'dream-app-items'
+export const STORAGE_KEY = 'dream-todo-items'
 
 // アプリケーション設定
 export const APP_CONFIG = {
-  title: 'やりたいことを集める',
-  subtitle: 'あなたのやりたいことをメモしておく。実現に向けて一歩ずつ進もう。',
-  inputPlaceholder: '例: 世界一周旅行に行く',
+  title: 'やりたいこととTODO',
+  subtitle: 'やりたいこととやること（TODO）をメモしておく。実現に向けて一歩ずつ進もう。',
+  inputPlaceholder: 'やりたいことまたはTODOを入力...',
 }
 
 // メッセージ
 export const MESSAGES = {
-  empty: 'やりたいことはまだありません。思いついたことをどんどん追加しましょう！',
+  emptyDream: 'やりたいことはまだありません。思いついたことをどんどん追加しましょう！',
+  emptyTodo: 'TODOはまだありません。やることを追加しましょう！',
   add: '追加する',
 }
 
 // ラベル
 export const LABELS = {
   total: '全体',
-  completed: '実現済み',
-  todoInput: 'やりたいことを入力',
+  completed: '完了',
+  todoInput: 'タスクを入力',
+  dreams: 'やりたいこと',
+  todos: 'TODO',
+  dreamCompleted: '実現済み',
+  todoCompleted: '完了',
 }
+
+// タスクタイプ
+export const TASK_TYPES = {
+  DREAM: 'dream',
+  TODO: 'todo',
+}
+
+export const TASK_TYPE_OPTIONS = [
+  { value: 'dream', label: 'やりたいこと' },
+  { value: 'todo', label: 'TODO' },
+]

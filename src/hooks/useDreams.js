@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
-import { STORAGE_KEY } from '../utils/constants'
+import { STORAGE_KEY, TASK_TYPES } from '../utils/constants'
 
-const loadDreams = () => {
+const loadTasks = () => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     return saved ? JSON.parse(saved) : []
@@ -10,50 +10,61 @@ const loadDreams = () => {
   }
 }
 
-export const useDreams = () => {
-  const [dreams, setDreams] = useState(loadDreams)
+export const useTasks = () => {
+  const [tasks, setTasks] = useState(loadTasks)
 
   // ローカルストレージに保存
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(dreams))
-  }, [dreams])
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+  }, [tasks])
 
-  // 実現済み数を計算
-  const realizedCount = useMemo(
-    () => dreams.filter((dream) => dream.done).length,
+  // タスクタイプごとにフィルタ
+  const dreams = useMemo(() => tasks.filter((t) => t.type === TASK_TYPES.DREAM), [tasks])
+  const todos = useMemo(() => tasks.filter((t) => t.type === TASK_TYPES.TODO), [tasks])
+
+  // 完了数を計算
+  const dreamCompletedCount = useMemo(
+    () => dreams.filter((d) => d.done).length,
     [dreams],
   )
+  const todoCompletedCount = useMemo(
+    () => todos.filter((t) => t.done).length,
+    [todos],
+  )
 
-  // やりたいことを追加
-  const addDream = (text) => {
+  // タスクを追加
+  const addTask = (text, type) => {
     const trimmedText = text.trim()
     if (!trimmedText) return
 
-    setDreams((current) => [
-      { id: Date.now(), text: trimmedText, done: false },
+    setTasks((current) => [
+      { id: Date.now(), text: trimmedText, type, done: false },
       ...current,
     ])
   }
 
-  // 実現状態を切り替え
-  const toggleDream = (id) => {
-    setDreams((current) =>
-      current.map((dream) =>
-        dream.id === id ? { ...dream, done: !dream.done } : dream,
+  // 完了状態を切り替え
+  const toggleTask = (id) => {
+    setTasks((current) =>
+      current.map((task) =>
+        task.id === id ? { ...task, done: !task.done } : task,
       ),
     )
   }
 
-  // やりたいことを削除
-  const deleteDream = (id) => {
-    setDreams((current) => current.filter((dream) => dream.id !== id))
+  // タスクを削除
+  const deleteTask = (id) => {
+    setTasks((current) => current.filter((task) => task.id !== id))
   }
 
   return {
+    tasks,
     dreams,
-    realizedCount,
-    addDream,
-    toggleDream,
-    deleteDream,
+    todos,
+    dreamCompletedCount,
+    todoCompletedCount,
+    addTask,
+    toggleTask,
+    deleteTask,
   }
 }

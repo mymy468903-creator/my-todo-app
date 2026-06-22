@@ -1,22 +1,36 @@
 import './App.css'
-import { useDreams } from './hooks/useDreams'
+import { useTasks } from './hooks/useDreams'
 import { Header } from './components/Header'
-import { DreamForm } from './components/DreamForm'
+import { TaskForm } from './components/TaskForm'
 import { Stats } from './components/Stats'
-import { DreamList } from './components/DreamList'
+import { TaskList } from './components/TaskList'
 
 function App() {
-  const { dreams, realizedCount, addDream, toggleDream, deleteDream } = useDreams()
+  const {
+    dreams,
+    todos,
+    dreamCompletedCount,
+    todoCompletedCount,
+    addTask,
+    toggleTask,
+    deleteTask,
+  } = useTasks()
 
   return (
     <main className="app-shell">
       <Header />
-      <DreamForm onSubmit={addDream} />
-      <Stats total={dreams.length} realized={realizedCount} />
-      <DreamList
+      <TaskForm onSubmit={addTask} />
+      <Stats
+        dreamCount={dreams.length}
+        dreamCompleted={dreamCompletedCount}
+        todoCount={todos.length}
+        todoCompleted={todoCompletedCount}
+      />
+      <TaskList
         dreams={dreams}
-        onToggle={toggleDream}
-        onDelete={deleteDream}
+        todos={todos}
+        onToggle={toggleTask}
+        onDelete={deleteTask}
       />
     </main>
   )
