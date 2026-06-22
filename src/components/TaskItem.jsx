@@ -9,7 +9,7 @@ export function TaskItem({ task, onToggle, onDelete }) {
           checked={task.done}
           onChange={() => onToggle(task.id)}
         />
-        <label htmlFor={`task-${task.id}`} className="todo-text">
+        <label htmlFor={`task-${task.id}`} className={`todo-text ${task.done ? 'done' : ''}`}>
           {task.text}
         </label>
       </div>
